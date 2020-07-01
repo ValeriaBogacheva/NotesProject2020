@@ -11,8 +11,7 @@ public class CategoryEntity {
     private Long id;
     private String name;
 
-    public CategoryEntity(){
-    }
+    public CategoryEntity(){}
 
     public CategoryEntity(String name){ this(null, name); }
 

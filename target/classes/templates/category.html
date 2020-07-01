@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MyNotes</title>
+</head>
+
+<body bgcolor = "#FFDEAD">
+    <div th:each="category: ${categories}">
+        <a th:href="@{/category/{id}(id=${category.getId()})}" th:utext="${category.getName()}"></a>
+    </div>
+</body>
+</html>

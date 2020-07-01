@@ -7,6 +7,7 @@ public class TaskEntity {
     @Id
     @GeneratedValue
     private Long id;
+    private Long parent_id;
     private String description;
     private Boolean done;
 
@@ -17,8 +18,9 @@ public class TaskEntity {
     public TaskEntity(){
     }
 
-    public TaskEntity(Long id, String description, Boolean done){
+    public TaskEntity(Long id, Long parent_id, String description, Boolean done){
         this.id = id;
+        this.parent_id = parent_id;
         this.description = description;
         this.done = done;
     }
@@ -30,5 +32,9 @@ public class TaskEntity {
     public String getDescription(){ return description; }
 
     public void setDescription(String description) { this.description = description; }
+
+    public Boolean getDone(){ return done; }
+
+    public void setDone(Boolean done){ this.done = done; }
 
 }
