@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>MyNotes</title>
+    <link rel = "stylesheet" href="/assets/style.css">
+</head>
+<body>
+    <form action="#" th:action="@{/addCategory}" th:object="${addCategory}" method="post">
+        <p>Название: <input type="text" th:field="*{name}" /></p>
+        <p><input type="submit" value="Добавить" /> </p>
+    </form>
+</body>
+</html>

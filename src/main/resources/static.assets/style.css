@@ -1,0 +1,20 @@
+.sidebar {
+     background: #CD853F;
+     width: 300px;
+     position: fixed;
+     font-size: 20px;
+     overflow: auto;
+     overflow-x: auto;
+     height: 100%;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+
+body {
+    background: #FFDEAD;
+}

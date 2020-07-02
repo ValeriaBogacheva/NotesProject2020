@@ -22,6 +22,7 @@ public class CategoryView {
         Map<Long, CategoryEntity> categories = getCategories();
 
         model.addAttribute("categories", categories.values());
+        model.addAttribute("currentCategory", categories.get(null));
 
         return "category";
     }
