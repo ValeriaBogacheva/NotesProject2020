@@ -6,13 +6,32 @@
     <link rel = "stylesheet" href="/assets/style.css">
 </head>
 
-<body>
-    <div class="sidebar">
-        <div th:each="category: ${categories}">
-            <a th:href="@{/category/{id}(id=${category.getId()})}" th:utext="${category.getName()}"></a>
-        </div>
-        <a th:href="@{/addCategory}">Добавить категорию</a>
-    </div>
+<body bgcolor="#FFDEAD">
+<h1 align="center">ЗАМЕТКИ</h1>
+<table border="1" align="center" cellpadding="10" cellspacing="0">
+    <tr>
+        <th bgcolor="#CD853F" width="30%" height="30">Мои категории</th>
+        <th bgcolor="#CD853F" th:utext="${currentCategory.getName()}"></th>
+    </tr>
+    <tr>
+        <td>
+            <ul th:each="category: ${categories}">
+                <li><a th:href="@{/category/{id}(id=${category.getId()})}" th:utext="${category.getName()}"></a></li>
+            </ul>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            <!-- <a th:href="@{/addCategory}">Добавить категорию</a> -->
+            <form action="#" th:action="@{/addCategory}" method="post" >
+                <input type="text" name="name" />
+                <input type="submit" value="Добавить" />
+            </form>
+        </td>
+        <td></td>
+    </tr>
+</table>
 </body>
 </html>
 

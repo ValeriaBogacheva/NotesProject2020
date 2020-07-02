@@ -21,9 +21,9 @@ public class TaskEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "categoryEntity_id", nullable = false)
-    private CategoryEntity categoryEntity;
+    @ManyToOne()
+    @JoinColumn(name = "ID_F", nullable = false)
+    private CategoryEntity ctg;
 
     public TaskEntity(){
     }
@@ -52,21 +52,13 @@ public class TaskEntity {
 
     public Long getId(){ return id; }
 
-    public void setParentId(Long parent_id){
-        this.parent_id = parent_id;
-    }
+    public void setParentId(Long parent_id){ this.parent_id = parent_id; }
 
-    public Long getParentId(Long parent_id){
-        return parent_id;
-    }
+    public Long getParentId(Long parent_id){ return parent_id; }
 
-    public void setTittle(String tittle){
-        this.tittle = tittle;
-    }
+    public void setTittle(String tittle){ this.tittle = tittle; }
 
-    public String getTittle(){
-        return tittle;
-    }
+    public String getTittle(){ return tittle; }
 
     public void setDescription(String description) { this.description = description; }
 
@@ -76,13 +68,9 @@ public class TaskEntity {
 
     public Boolean getDone(){ return done; }
 
-    public void setDate(Date date){
-        this.date = date;
-    }
+    public void setDate(Date date){ this.date = date; }
 
-    public Date getate(){
-        return date;
-    }
+    public Date getate(){ return date; }
 }
 
 

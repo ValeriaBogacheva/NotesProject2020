@@ -1,9 +1,8 @@
 package ru.bve.notes.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+import java.util.*;
 
 @Entity
 public class CategoryEntity {
@@ -11,6 +10,10 @@ public class CategoryEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "ctg", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<TaskEntity> tasks;
 
     public CategoryEntity(){}
 
@@ -28,5 +31,9 @@ public class CategoryEntity {
     public void setName(String name){ this.name = name; }
 
     public String getName(){ return name; }
+
+    public void setTasks(List<TaskEntity> tasks){ this.tasks = tasks; }
+
+    public List<TaskEntity> getTasks(){ return tasks; }
 
 }
