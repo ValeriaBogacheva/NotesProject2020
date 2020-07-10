@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.bve.notes.Repositories.CategoryRepository;
 import ru.bve.notes.Repositories.TaskRepository;
 import ru.bve.notes.domain.CategoryEntity;
+import ru.bve.notes.domain.TaskEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,31 +23,34 @@ public class CategoryView {
     @Autowired
     private TaskRepository taskRepository;
 
-    @RequestMapping(value = {"/category"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/category"}, method = RequestMethod.GET)
     public String getIndex(Model model){
         Map<Long, CategoryEntity> categories = getCategories();
+        Iterable<TaskEntity> tasks = taskRepository.findAll();
 
         model.addAttribute("categories", categories.values());
         model.addAttribute("currentCategory", categories.get(0L));
+        model.addAttribute("tasks", tasks);
 
-        return "category";
+        return "index";
     }
 
     @RequestMapping(value = {"/category/{id}"}, method = RequestMethod.GET)
-    public String getIndex(Model model, @PathVariable long id){
+    public String getIndex(Model model, @PathVariable Long id){
         Map<Long, CategoryEntity> categories = getCategories();
+        Map<Long, TaskEntity> tasks = getTasks(id);
 
         model.addAttribute("categories", categories.values());
         model.addAttribute("currentCategory", categories.get(id));
+        model.addAttribute("tasks", tasks.values());
 
-        return "category";
+        return "index";
     }
 
     private Map<Long, CategoryEntity> getCategories(){
         Map<Long, CategoryEntity> result = new HashMap<>();
-        result.put(0L, new CategoryEntity(("Все")));
-
         Iterable<CategoryEntity> categories = categoryRepository.findAll();
+        result.put(0L, new CategoryEntity(("Все")));
 
         for (CategoryEntity entity: categories){
             result.put(entity.getId(), entity);
@@ -54,9 +58,21 @@ public class CategoryView {
         return result;
     }
 
+    private Map<Long, TaskEntity> getTasks(Long id){
+        Map<Long, TaskEntity> result = new HashMap<>();
+        Iterable<TaskEntity> tasks = taskRepository.findAll();
+
+        for (TaskEntity entity: tasks){
+            if (entity.getParent() == id)
+                result.put(entity.getId(), entity);
+        }
+        return result;
+    }
+
     @RequestMapping(value = "/addCategory", method = RequestMethod.GET)
     public String categoryForm(Model model) {
         model.addAttribute("addCategory", new CategoryEntity());
+
         return "addCategory";
     }
 
@@ -65,7 +81,22 @@ public class CategoryView {
         if (StringUtils.hasText(addcategory.getName())){
             categoryRepository.save(new CategoryEntity(addcategory.getName()));
         }
-        return "redirect:/category";
+
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/category/addTask", method = RequestMethod.GET)
+    public String taskForm(Model model){
+        model.addAttribute("addTask", new TaskEntity());
+
+        return "addTask";
+    }
+
+    @RequestMapping(value = {"/category/addTask"}, method = RequestMethod.POST)
+    public String categorySubmit(@ModelAttribute TaskEntity addtask, Model model){
+        taskRepository.save(new TaskEntity(addtask.getParent(), addtask.getTitle()));
+
+        return "redirect:/category/" + addtask.getParent();
     }
 }
 

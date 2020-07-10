@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MyNotes</title>
+
+    <style>
+        a{
+        background-color: #FFDEAD;
+        color: black;
+        text-decoration: none;
+        font-size: 20px
+        }
+        a:hover {
+        color: #800000;
+       }
+  </style>
+
+</head>
+
+<body bgcolor="#FFDEAD">
+<h1 align="center">МОИ ЗАМЕТКИ</h1>
+<table border="1" align="center" cellpadding="10" cellspacing="0">
+    <tr>
+        <th style="font-size: 25px" bgcolor="#CD853F" width="40%" height="30">Мои категории</th>
+        <th style="font-size: 25px" bgcolor="#CD853F" th:utext="${currentCategory.getName()}"></th>
+    </tr>
+    <tr>
+        <td>
+            <ul th:each="category: ${categories}">
+                <li><a th:href="@{/category/{id}(id=${category.getId()})}" th:utext="${category.getName()}"></a></li>
+            </ul>
+        </td>
+        <td>
+            <ul th:each="task: ${tasks}">
+                <li><a th:utext="${task.getTittle()}"></a></li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <!-- <a th:href="@{/addCategory}">Добавить категорию</a> -->
+            <form action="#" th:action="@{/addCategory}" method="post" >
+                <input type="text" name="name" />
+                <input type="submit" value="Добавить" />
+            </form>
+        </td>
+        <td>
+            <form action="#" th:action="@{/category/addTask}" method="post" >
+                <input type="text" name="title" />
+                <input type="hidden" name="parent" th:value="${currentCategory.getId()}">
+                <input type="submit" value="Добавить" />
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
+

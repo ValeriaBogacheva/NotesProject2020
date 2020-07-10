@@ -7,13 +7,13 @@ import java.util.*;
 @Entity
 public class CategoryEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue//(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "ctg", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<TaskEntity> tasks;
+    @OneToMany(mappedBy = "categoryEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<TaskEntity> tasks = new HashSet<>();
 
     public CategoryEntity(){}
 
@@ -31,9 +31,5 @@ public class CategoryEntity {
     public void setName(String name){ this.name = name; }
 
     public String getName(){ return name; }
-
-    public void setTasks(List<TaskEntity> tasks){ this.tasks = tasks; }
-
-    public List<TaskEntity> getTasks(){ return tasks; }
 
 }

@@ -1,8 +1,8 @@
 package ru.bve.notes.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 
 @Entity
@@ -10,8 +10,8 @@ public class TaskEntity {
     @Id
     @GeneratedValue
     private Long id;
-    private Long parent_id;
-    private String tittle;
+    private Long parent;
+    private String title;
     private String description;
     private Boolean done;
     @Temporal(TemporalType.TIMESTAMP)
@@ -21,26 +21,26 @@ public class TaskEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    @ManyToOne()
-    @JoinColumn(name = "ID_F", nullable = false)
-    private CategoryEntity ctg;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoryId", nullable = false)
+    private CategoryEntity categoryEntity;
 
     public TaskEntity(){
     }
 
-    public TaskEntity(Long parent_id, String tittle){
-        this(null, parent_id, tittle, "", false, null, null, null);
+    public TaskEntity(Long parent, String title){
+        this(null, parent, title, null, false, null, null, null);
 
-        LocalDateTime currentDataTime = LocalDateTime.now();
+        /*LocalDateTime currentDataTime = LocalDateTime.now();
         this.createDate = Date.from(currentDataTime.atZone(ZoneId.systemDefault()).toInstant());
-        this.updateDate = createDate;
+        this.updateDate = createDate;*/
     }
 
-    public TaskEntity(Long id, long parent_id, String tittle, String discription, Boolean done,
+    public TaskEntity(Long id, Long parent, String title, String description, Boolean done,
                       Date createDate, Date updateDate, Date date){
         this.id = id;
-        this.parent_id = parent_id;
-        this.tittle = tittle;
+        this.parent = parent;
+        this.title = title;
         this.description = description;
         this.done = done;
         this.createDate = createDate;
@@ -52,13 +52,13 @@ public class TaskEntity {
 
     public Long getId(){ return id; }
 
-    public void setParentId(Long parent_id){ this.parent_id = parent_id; }
+    public void setParent(Long parent){ this.parent = parent; }
 
-    public Long getParentId(Long parent_id){ return parent_id; }
+    public Long getParent(){ return parent; }
 
-    public void setTittle(String tittle){ this.tittle = tittle; }
+    public void setTitle(String title){ this.title = title; }
 
-    public String getTittle(){ return tittle; }
+    public String getTitle(){ return title; }
 
     public void setDescription(String description) { this.description = description; }
 
@@ -70,7 +70,21 @@ public class TaskEntity {
 
     public void setDate(Date date){ this.date = date; }
 
-    public Date getate(){ return date; }
+    public Date getDate(){ return date; }
+
+    @JsonIgnore
+    public void setCategoryEntity(CategoryEntity categoryEntity){
+        this.categoryEntity = categoryEntity;
+    }
+
+    public Long getCategoryId(){
+        return categoryEntity.getId();
+    }
+
+    public String getCategoryName(){
+        return categoryEntity.getName();
+    }
+
 }
 
 
