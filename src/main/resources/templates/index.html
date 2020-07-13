@@ -6,7 +6,6 @@
 
     <style>
         a{
-        background-color: #FFDEAD;
         color: black;
         text-decoration: none;
         font-size: 20px
@@ -26,14 +25,17 @@
         <th style="font-size: 25px" bgcolor="#CD853F" th:utext="${currentCategory.getName()}"></th>
     </tr>
     <tr>
-        <td>
+        <td align="left">
             <ul th:each="category: ${categories}">
                 <li><a th:href="@{/category/{id}(id=${category.getId()})}" th:utext="${category.getName()}"></a></li>
+                <form align="right" action="#" th:action="@{/category/{id}/delete (id=${category.getId()})}">
+                    <input type="submit" value="Удалить" />
+                </form>
             </ul>
         </td>
         <td>
             <ul th:each="task: ${tasks}">
-                <li><a th:utext="${task.getTittle()}"></a></li>
+                <li><a th:utext="${task.getTitle()}"></a></li>
             </ul>
         </td>
     </tr>

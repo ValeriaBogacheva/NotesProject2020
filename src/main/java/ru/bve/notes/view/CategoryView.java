@@ -85,6 +85,13 @@ public class CategoryView {
         return "redirect:/";
     }
 
+    @RequestMapping(value = {"/category/{id}/delete"})
+    public String removeCategory(@PathVariable Long id) {
+        categoryRepository.deleteById(id);
+
+        return "redirect:/category";
+    }
+
     @RequestMapping(value = "/category/addTask", method = RequestMethod.GET)
     public String taskForm(Model model){
         model.addAttribute("addTask", new TaskEntity());
@@ -94,7 +101,11 @@ public class CategoryView {
 
     @RequestMapping(value = {"/category/addTask"}, method = RequestMethod.POST)
     public String categorySubmit(@ModelAttribute TaskEntity addtask, Model model){
-        taskRepository.save(new TaskEntity(addtask.getParent(), addtask.getTitle()));
+        CategoryEntity category = categoryRepository.findById(addtask.getParent()).get();
+        TaskEntity task = new TaskEntity(addtask.getParent(), addtask.getTitle());
+        task.setCategory(category);
+
+        taskRepository.save(task);
 
         return "redirect:/category/" + addtask.getParent();
     }

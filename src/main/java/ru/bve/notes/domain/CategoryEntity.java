@@ -12,7 +12,7 @@ public class CategoryEntity {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "categoryEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<TaskEntity> tasks = new HashSet<>();
 
     public CategoryEntity(){}

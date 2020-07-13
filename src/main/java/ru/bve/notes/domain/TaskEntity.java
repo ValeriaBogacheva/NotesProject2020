@@ -23,7 +23,7 @@ public class TaskEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoryId", nullable = false)
-    private CategoryEntity categoryEntity;
+    private CategoryEntity category;
 
     public TaskEntity(){
     }
@@ -73,16 +73,16 @@ public class TaskEntity {
     public Date getDate(){ return date; }
 
     @JsonIgnore
-    public void setCategoryEntity(CategoryEntity categoryEntity){
-        this.categoryEntity = categoryEntity;
+    public void setCategory(CategoryEntity category){
+        this.category = category;
     }
 
     public Long getCategoryId(){
-        return categoryEntity.getId();
+        return category.getId();
     }
 
     public String getCategoryName(){
-        return categoryEntity.getName();
+        return category.getName();
     }
 
 }
