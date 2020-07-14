@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import ru.bve.notes.Repositories.CategoryRepository;
 import ru.bve.notes.Repositories.TaskRepository;
 import ru.bve.notes.domain.CategoryEntity;
@@ -104,10 +101,21 @@ public class CategoryView {
         CategoryEntity category = categoryRepository.findById(addtask.getParent()).get();
         TaskEntity task = new TaskEntity(addtask.getParent(), addtask.getTitle());
         task.setCategory(category);
-
         taskRepository.save(task);
 
         return "redirect:/category/" + addtask.getParent();
     }
+
+    @RequestMapping(value = {"/task/{taskId}/delete"})
+    public String removeTask(@ModelAttribute TaskEntity task, @PathVariable Long taskId) {
+        Long idс = task.getParent();
+        taskRepository.deleteById(taskId);
+        if (idс != null){
+            return "redirect:/category/" + idс;
+        } else{
+            return "redirect:/category";
+        }
+    }
+
 }
 

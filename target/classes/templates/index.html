@@ -6,36 +6,51 @@
 
     <style>
         a{
-        color: black;
-        text-decoration: none;
-        font-size: 20px
+            color: black;
+            text-decoration: none;
+            font-size: 20px
         }
         a:hover {
-        color: #800000;
-       }
+            color: #800000;
+        }
+        table{
+            table-layout: fixed;
+            width: 800px
+        }
+        td, th {
+            word-wrap: break-word;
+        }
   </style>
 
 </head>
 
-<body bgcolor="#FFDEAD">
+<body bgcolor="#FAEBD7">
 <h1 align="center">МОИ ЗАМЕТКИ</h1>
 <table border="1" align="center" cellpadding="10" cellspacing="0">
     <tr>
-        <th style="font-size: 25px" bgcolor="#CD853F" width="40%" height="30">Мои категории</th>
-        <th style="font-size: 25px" bgcolor="#CD853F" th:utext="${currentCategory.getName()}"></th>
+        <th style="font-size: 25px" bgcolor="#D8BFD8" width="300px" height="30">Мои категории</th>
+        <th style="font-size: 25px" bgcolor="#D8BFD8" width="500px" height="30" th:utext="${currentCategory.getName()}"></th>
     </tr>
     <tr>
-        <td align="left">
+        <td align="left" width="300px">
             <ul th:each="category: ${categories}">
                 <li><a th:href="@{/category/{id}(id=${category.getId()})}" th:utext="${category.getName()}"></a></li>
+                <form align="right" action="#" th:action="@{/category/{id}/update (id=${currentCategory.getId()})}">
+                    <input type="submit" value="✎">
+                </form>
                 <form align="right" action="#" th:action="@{/category/{id}/delete (id=${category.getId()})}">
                     <input type="submit" value="Удалить" />
                 </form>
             </ul>
         </td>
-        <td>
+        <td width="500px">
             <ul th:each="task: ${tasks}">
-                <li><a th:utext="${task.getTitle()}"></a></li>
+                <li th:utext="${task.getTitle()}"></li>
+
+                <form align="right" action="#" th:action="@{/task/{taskId}/delete (taskId=${task.getId()})}">
+                    <input type="hidden" name="parent" th:value="${currentCategory.getId()}">
+                    <input type="submit" value="Удалить"/>
+                </form>
             </ul>
         </td>
     </tr>

@@ -7,7 +7,7 @@ import java.util.*;
 @Entity
 public class CategoryEntity {
     @Id
-    @GeneratedValue//(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
     private String name;
 
