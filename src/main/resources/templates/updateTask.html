@@ -5,7 +5,7 @@
     <title>Update task</title>
 </head>
 <body bgcolor="#FAEBD7">
-    <h2 align="center">Изменение заметки</h2>
+    <h2 align="center">Изменение задачи</h2>
     <form align="center" action="#" th:object="${task}" th:action="@{/task/{taskId}/update (taskId=${task.getId()})}" method="post">
         <p>Введите название: <input type="text" th:field="*{title}"/></p>
         <p><button type="submit">Ок</button></p>

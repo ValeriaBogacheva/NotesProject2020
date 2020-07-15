@@ -118,16 +118,15 @@ public class CategoryView {
     }
 
     @GetMapping(value = {"/category/{id}/update"})
-    public String upCategoryForm(Model model, @PathVariable long id){
+    public String upCategoryForm(Model model, @PathVariable long id) {
         CategoryEntity category = categoryRepository.findById(id);
         model.addAttribute("category", category);
 
         return "/update";
     }
-
-    @RequestMapping(value = {"/category/{id}/update"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/category/{id}/update"}, method = {RequestMethod.POST})
     public String upCategorySubmit(Model model, @PathVariable long id,
-                                    @ModelAttribute("category") CategoryEntity category){
+                               @ModelAttribute("category") CategoryEntity category) {
         CategoryEntity categoryToUpdate = categoryRepository.findById(id);
         categoryToUpdate.setName(category.getName());
         categoryRepository.save(categoryToUpdate);

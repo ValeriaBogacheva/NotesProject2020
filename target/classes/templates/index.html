@@ -35,7 +35,7 @@
         <td align="left" width="300px">
             <ul th:each="category: ${categories}">
                 <li><a th:href="@{/category/{id}(id=${category.getId()})}" th:utext="${category.getName()}"></a></li>
-                <a th:href="@{/category/{id}/update (id=${currentCategory.getId()})}">
+                <a th:href="@{/category/{id}/update (id=${category.getId()})}">
                     <input align="right" type="submit" value="✎" />
                 </a>
                 <form align="right" action="#" th:action="@{/category/{id}/delete (id=${category.getId()})}">
