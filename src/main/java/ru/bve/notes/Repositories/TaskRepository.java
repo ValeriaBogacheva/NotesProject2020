@@ -5,4 +5,5 @@ import ru.bve.notes.domain.TaskEntity;
 
 
 public interface TaskRepository extends CrudRepository<TaskEntity, Long> {
+    TaskEntity findById(long taskId);
 }

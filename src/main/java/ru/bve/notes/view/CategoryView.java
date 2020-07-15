@@ -117,5 +117,42 @@ public class CategoryView {
         }
     }
 
+    @GetMapping(value = {"/category/{id}/update"})
+    public String upCategoryForm(Model model, @PathVariable long id){
+        CategoryEntity category = categoryRepository.findById(id);
+        model.addAttribute("category", category);
+
+        return "/update";
+    }
+
+    @RequestMapping(value = {"/category/{id}/update"}, method = RequestMethod.POST)
+    public String upCategorySubmit(Model model, @PathVariable long id,
+                                    @ModelAttribute("category") CategoryEntity category){
+        CategoryEntity categoryToUpdate = categoryRepository.findById(id);
+        categoryToUpdate.setName(category.getName());
+        categoryRepository.save(categoryToUpdate);
+
+        return "redirect:/category/" + id;
+    }
+
+    @GetMapping(value = {"/task/{taskId}/update"})
+    public String upTaskForm(Model model, @PathVariable long taskId){
+        TaskEntity task = taskRepository.findById(taskId);
+        model.addAttribute("task", task);
+
+        return "/updateTask";
+    }
+
+    @RequestMapping(value = {"/task/{taskId}/update"}, method = RequestMethod.POST)
+    public String upTaskSubmit(Model model, @PathVariable long taskId,
+                                @ModelAttribute("task") TaskEntity task){
+        TaskEntity taskToUpdate = taskRepository.findById(taskId);
+        taskToUpdate.setTitle(task.getTitle());
+        taskRepository.save(taskToUpdate);
+        Long id = taskToUpdate.getParent();
+
+        return "redirect:/category/" + id;
+    }
+
 }
 
