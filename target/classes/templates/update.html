@@ -7,7 +7,7 @@
 <body bgcolor="#FAEBD7">
     <h2 align="center">Изменение категории</h2>
     <form align="center" action="#" th:object="${category}" th:action="@{/category/{id}/update (id=${category.getId()})}" method="post">
-        <p>Введите название: <input type="text" name="name"/></p>
+        <p>Введите название: <input type="text" name="name" th:field="*{name}"/></p>
         <p><button type="submit">Ок</button></p>
     </form>
 </body>
